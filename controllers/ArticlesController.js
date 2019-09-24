@@ -1,5 +1,6 @@
 const ZSequelize = require('../libraries/ZSequelize');
 const Op = require('sequelize').Op;
+const redis = require('redis');
 
 module.exports = {
     createArticle: async function(req, res){
@@ -69,6 +70,16 @@ module.exports = {
     },
 
     getArticlesWithCategories: async function(req, res){
+
+        // create and connect redis client to local instance.
+        const client = redis.createClient(6379)
+        const REDIS_KEY = 'NBC';
+ 
+        // echo redis errors to the console
+        client.on('error', (err) => {
+            console.log("Error " + err)
+        });
+
        /* PARAMETER */
 		let articlesField = [
             'id',
@@ -116,7 +127,10 @@ module.exports = {
             articlesJoins);
 
 		if (articlesResult.result) {
-			return res.status(200).json({
+            // Save the  API response in Redis store,  data expire time in 3600 seconds, it means one hour
+            client.setex(REDIS_KEY, 3600, JSON.stringify(articlesResult.dataValues));
+            
+			return res.send({
 				result : articlesResult.result,
 				data:{
 					code: 200,

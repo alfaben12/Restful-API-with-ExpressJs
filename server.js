@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = 3003;
+const API_VERSION = 'v1';
 const cors = require('cors');
 
 // allow request
@@ -16,6 +17,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => res.send('Hello World'));
-app.use('/articles', ArticlesRouter);
+app.use('/api/'+ API_VERSION +'/articles', ArticlesRouter);
 
 app.listen(PORT, () => console.log('Example app listening on port ' + PORT));

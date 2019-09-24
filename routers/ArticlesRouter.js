@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ArticlesController = require('../controllers/ArticlesController');
-
+const CacheArticles = require('../middleware/CacheArticles');
 router.post(
 	'/',
 	ArticlesController.createArticle
@@ -9,6 +9,7 @@ router.post(
 
 router.get(
 	'/',
+	CacheArticles.cacheArticles,
 	ArticlesController.getArticlesWithCategories
 );
 
