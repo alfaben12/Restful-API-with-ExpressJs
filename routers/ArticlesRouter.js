@@ -10,7 +10,7 @@ router.post(
 router.get(
 	'/',
 	CacheArticles.cacheArticles,
-	ArticlesController.getArticlesWithCategories
+	ArticlesController.getArticles
 );
 
 router.put(

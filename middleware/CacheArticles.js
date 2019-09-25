@@ -11,16 +11,15 @@ exports.cacheArticles = function(req, res, next) {
 	});
 
 	// Try fetching the result from Redis first in case we have it cached
-    return client.get(REDIS_KEY, (err, photos) => {
+    return client.get(REDIS_KEY, (err, articles) => {
  
         // If that key exists in Redis store
-        if (photos) {
+        if (articles) {
  
-            return res.json({ source: 'cache', data: JSON.parse(photos) })
+            return res.json({ source: 'cache', data: JSON.parse(articles) })
  
         } else { // Key does not exist in Redis store
             next();
         }
     });
-    // client.del('NBC')
 };

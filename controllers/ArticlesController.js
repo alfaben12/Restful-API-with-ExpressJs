@@ -69,7 +69,7 @@ module.exports = {
         }
     },
 
-    getArticlesWithCategories: async function(req, res){
+    getArticles: async function(req, res){
 
         // create and connect redis client to local instance.
         const client = redis.createClient(6379)
@@ -140,7 +140,8 @@ module.exports = {
 			});
         }else{
             return res.status(204).json({
-				result : articlesResult.result,
+                result : articlesResult.result,
+                source: 'db',
 				data:{
 					code: 204,
                     message: "Failed."
