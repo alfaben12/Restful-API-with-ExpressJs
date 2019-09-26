@@ -1,15 +1,13 @@
 const express = require('express');
 const app = express();
-const PORT = 3003;
 const API_VERSION = 'v1';
 const cors = require('cors');
 const redis = require('redis');
-
-// allow request
-app.use(cors());
+const PORT = 3003;
 
 /* ROUTER */
 const ArticlesRouter = require('./routers/ArticlesRouter');
+
 // create and connect redis client to local instance.
 const client = redis.createClient(6379)
 const REDIS_KEY = 'NBC';
